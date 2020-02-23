@@ -5,22 +5,28 @@ void main() => runApp(PottyTrainer());
 class PottyTrainer extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return PottyTrainerState();
+    return _PottyTrainerState();
   }
 }
 
-class PottyTrainerState extends State<PottyTrainer> {
-  Widget build(BuildContext context) {
-    int pottiesRecorded = 0;
+class _PottyTrainerState extends State<PottyTrainer> {
+    int _pottyIndex = 0;
     void recordPotty() {
-      pottiesRecorded = pottiesRecorded + 1;
-      print('$pottiesRecorded potty(ies) recorded!');
+      setState(() {
+        if(_pottyIndex == 1){
+         _pottyIndex = 0;
+        } else {
+          _pottyIndex = _pottyIndex + 1;
+        }
+      });
+        print('$_pottyIndex potty(ies) recorded!');
     }
+  Widget build(BuildContext context) {
+    var pottyQuestions = [
+      {'question':'What was it?', 'option1':'Number one', 'option2':'Number two' },
+      {'question':'Where was it?', 'option1':'In the potty', 'option2':"Not in potty"}
+    ];
 
-    // var questions = [
-    //   'Where was it?',
-    //   'What was it?',
-    // ];
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -28,21 +34,13 @@ class PottyTrainerState extends State<PottyTrainer> {
         ),
         body: Column(
           children: <Widget>[
-            Text('A Pottty!'),
+            Text(pottyQuestions[_pottyIndex]['question']),
             RaisedButton(
-              child: Text('Number one on Potty!'),
+              child: Text(pottyQuestions[_pottyIndex]['option1']),
               onPressed: recordPotty,
             ),
             RaisedButton(
-              child: Text('Number two on Potty!'),
-              onPressed: recordPotty,
-            ),
-            RaisedButton(
-              child: Text('Number one not on potty.'),
-              onPressed: recordPotty,
-            ),
-            RaisedButton(
-              child: Text('Number two not on potty.'),
+              child: Text(pottyQuestions[_pottyIndex]['option2']),
               onPressed: recordPotty,
             ),
           ],
