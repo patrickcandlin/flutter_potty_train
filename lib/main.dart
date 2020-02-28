@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import './question.dart';
+
 
 void main() => runApp(PottyTrainer());
 
@@ -11,7 +13,7 @@ class PottyTrainer extends StatefulWidget {
 
 class _PottyTrainerState extends State<PottyTrainer> {
     int _pottyIndex = 0;
-    void recordPotty() {
+    void _recordPotty() {
       setState(() {
         if(_pottyIndex == 1){
          _pottyIndex = 0;
@@ -34,14 +36,14 @@ class _PottyTrainerState extends State<PottyTrainer> {
         ),
         body: Column(
           children: <Widget>[
-            Text(pottyQuestions[_pottyIndex]['question']),
+            Question(pottyQuestions[_pottyIndex]['question']),
             RaisedButton(
               child: Text(pottyQuestions[_pottyIndex]['option1']),
-              onPressed: recordPotty,
+              onPressed: _recordPotty,
             ),
             RaisedButton(
               child: Text(pottyQuestions[_pottyIndex]['option2']),
-              onPressed: recordPotty,
+              onPressed: _recordPotty,
             ),
           ],
         ),
