@@ -12,6 +12,16 @@ class PottyTrainer extends StatefulWidget {
 }
 
 class _PottyTrainerState extends State<PottyTrainer> {
+  final pottyQuestions = const [
+      {
+        'question': 'What was it?',
+        'answers': ['Pee pee', 'Poop!']
+      },
+      {
+        'question': 'Where was it?',
+        'answers': ['In the Potty!', 'In the toilet!', 'Pants', 'Floor']
+      }
+    ];
   int _pottyIndex = 0;
   void _recordPotty() {
     setState(() {
@@ -25,18 +35,7 @@ class _PottyTrainerState extends State<PottyTrainer> {
   }
 
   Widget build(BuildContext context) {
-    var pottyQuestions = [
-      {
-        'question': 'What was it?',
-        'option1': 'Number one',
-        'option2': 'Number two'
-      },
-      {
-        'question': 'Where was it?',
-        'option1': 'In the potty',
-        'option2': "Not in potty"
-      }
-    ];
+    
 
     return MaterialApp(
       home: Scaffold(
@@ -46,8 +45,10 @@ class _PottyTrainerState extends State<PottyTrainer> {
         body: Column(
           children: <Widget>[
             Question(pottyQuestions[_pottyIndex]['question']),
-            Answer(_recordPotty, pottyQuestions[_pottyIndex]['option1']),
-            Answer(_recordPotty, pottyQuestions[_pottyIndex]['option2'])
+            ...(pottyQuestions[_pottyIndex]['answers'] as List<String>)
+                .map((answer) {
+              return Answer(_recordPotty, answer);
+            }).toList()
           ],
         ),
       ),
