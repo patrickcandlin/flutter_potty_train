@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import './question.dart';
+import 'answer.dart';
 
 void main() => runApp(PottyTrainer());
 
@@ -10,21 +12,30 @@ class PottyTrainer extends StatefulWidget {
 }
 
 class _PottyTrainerState extends State<PottyTrainer> {
-    int _pottyIndex = 0;
-    void recordPotty() {
-      setState(() {
-        if(_pottyIndex == 1){
-         _pottyIndex = 0;
-        } else {
-          _pottyIndex = _pottyIndex + 1;
-        }
-      });
-        print('$_pottyIndex potty(ies) recorded!');
-    }
+  int _pottyIndex = 0;
+  void _recordPotty() {
+    setState(() {
+      if (_pottyIndex == 1) {
+        _pottyIndex = 0;
+      } else {
+        _pottyIndex = _pottyIndex + 1;
+      }
+    });
+    print('$_pottyIndex potty(ies) recorded!');
+  }
+
   Widget build(BuildContext context) {
     var pottyQuestions = [
-      {'question':'What was it?', 'option1':'Number one', 'option2':'Number two' },
-      {'question':'Where was it?', 'option1':'In the potty', 'option2':"Not in potty"}
+      {
+        'question': 'What was it?',
+        'option1': 'Number one',
+        'option2': 'Number two'
+      },
+      {
+        'question': 'Where was it?',
+        'option1': 'In the potty',
+        'option2': "Not in potty"
+      }
     ];
 
     return MaterialApp(
@@ -34,15 +45,9 @@ class _PottyTrainerState extends State<PottyTrainer> {
         ),
         body: Column(
           children: <Widget>[
-            Text(pottyQuestions[_pottyIndex]['question']),
-            RaisedButton(
-              child: Text(pottyQuestions[_pottyIndex]['option1']),
-              onPressed: recordPotty,
-            ),
-            RaisedButton(
-              child: Text(pottyQuestions[_pottyIndex]['option2']),
-              onPressed: recordPotty,
-            ),
+            Question(pottyQuestions[_pottyIndex]['question']),
+            Answer(_recordPotty, pottyQuestions[_pottyIndex]['option1']),
+            Answer(_recordPotty, pottyQuestions[_pottyIndex]['option2'])
           ],
         ),
       ),
